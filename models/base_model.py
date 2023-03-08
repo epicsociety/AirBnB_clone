@@ -7,7 +7,7 @@ The base class fo the AirBnB clone console
 from copy import deepcopy
 from datetime import datetime
 from uuid import uuid4
-
+from models import storage
 
 class BaseModel:
     """The base class that defines attributes for other classes"""
@@ -34,7 +34,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = deepcopy(self.created_at)
-            """storage.new(self)"""
+            storage.new(self)
 
     def __str__(self):
         """Returns a human-readable string representation
@@ -56,8 +56,8 @@ class BaseModel:
         """
 
         self.update_at = datetime.now()
-        """storage.new(self)
-        storage.save()"""
+        storage.new(self)
+        storage.save()
         return None
 
     def to_dict(self):
