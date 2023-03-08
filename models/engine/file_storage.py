@@ -67,4 +67,3 @@ class FileStorage:
                 self.__objects[k] = classes_dict[v["__class__"]](**v)
         except Exception:
             pass
-
