@@ -49,8 +49,7 @@ class BaseModel:
 
         return "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
 
-<<<<<<< HEAD
-=======
+
     def save(self):
         """Updates 'updated_at' attribute with 
         the current time
@@ -58,13 +57,12 @@ class BaseModel:
             self.(object): <class '__main__.BaseModel'> type object
         """
 
-        
         self.update_at = datetime.now()
         models.storage.new(self)
         models.storage.save()
         return None
 
->>>>>>> mike_test
+
     def to_dict(self):
         """Returns a dictionary representation of an instance
         Args:
