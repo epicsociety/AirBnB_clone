@@ -4,10 +4,11 @@ The base class fo the AirBnB clone console
 """
 
 
+import models
 from copy import deepcopy
 from datetime import datetime
 from uuid import uuid4
-from models import storage
+
 
 class BaseModel:
     """The base class that defines attributes for other classes"""
@@ -20,12 +21,12 @@ class BaseModel:
 		    - **kwargs: dict of key-values arguments
 		"""
 
-        timeformat = "%Y-%m-%dT%H:%M:%S.%f"
+        time = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs is not None and kwargs != {}:
             for k, v in kwargs.items():
                 if k != "__class__":
                     if k == "created_at" or k == "updated_at":
-                        setattr(self, k, datetime.strptime(v, timeformat))
+                        setattr(self, k, datetime.strptime(v, time))
 
                     else:
                         setattr(self, k, v)
@@ -34,7 +35,7 @@ class BaseModel:
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = deepcopy(self.created_at)
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         """Returns a human-readable string representation
@@ -50,14 +51,15 @@ class BaseModel:
 
     def save(self):
         """Updates 'updated_at' attribute with 
-        the current time 
+        the current time
         Args:
             self.(object): <class '__main__.BaseModel'> type object
         """
 
+        
         self.update_at = datetime.now()
-        storage.new(self)
-        storage.save()
+        models.storage.new(self)
+        models.storage.save()
         return None
 
     def to_dict(self):
