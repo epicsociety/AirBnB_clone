@@ -19,7 +19,7 @@ class FileStorage:
     objects (dict): stores all objects by class
     '''
 
-    __file_path = 'file.json'
+    __file_path = 'file2.json'
     __objects = {}
     class_dict = {
         "BaseModel": BaseModel,
@@ -48,10 +48,12 @@ class FileStorage:
         '''
         save_dict = {}
         for k, v in FileStorage.__objects.items():
+            print(k, v)
             v_dict = v.to_dict()
             save_dict[k] = v_dict
         with open(FileStorage.__file_path, 'w') as f:
-            json.dump(save_dict, f)
+            """any unserializable use str as default"""
+            json.dump(save_dict, f, default=str)
 
     def reload(self):
         '''Deserialize the JSON file to __objects
