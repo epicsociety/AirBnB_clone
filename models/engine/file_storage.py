@@ -62,7 +62,7 @@ class FileStorage:
 
         try:
             with open(self.__file_path, "r") as file:
-                deserialie_my_dict = json.load(file)
+                deserialie_my_dict = json.loads(file)
             for k, v in deserialie_my_dict.items():
                 self.__objects[k] = classes_dict[v["__class__"]](**v)
         except Exception:

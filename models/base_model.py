@@ -48,18 +48,6 @@ class BaseModel:
 
         return "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
 
-    def save(self):
-        """Updates 'updated_at' attribute with 
-        the current time 
-        Args:
-            self.(object): <class '__main__.BaseModel'> type object
-        """
-
-        self.update_at = datetime.now()
-        storage.new(self)
-        storage.save()
-        return None
-
     def to_dict(self):
         """Returns a dictionary representation of an instance
         Args:
@@ -73,7 +61,19 @@ class BaseModel:
         my_dict = {}
         my_dict.update(self.__dict__)
         my_dict["__class__"] = self.__class__.__name__
-        my_dict["created_at"] = my_dict["created_at"].isoformat()
-        my_dict["updated_at"] = my_dict["updated_at"].isoformat()
+        my_dict["created_at"] = self.created_at.isoformat()
+        my_dict["updated_at"] = self.updated_at.isoformat()
         return my_dict
-    pass
+
+    def save(self):
+        """Updates 'updated_at' attribute with 
+        the current time 
+        Args:
+            self.(object): <class '__main__.BaseModel'> type object
+        """
+
+        self.update_at = datetime.now()
+        storage.new(self)
+        storage.save()
+        return None
+
