@@ -17,9 +17,9 @@ class BaseModel:
         """Initialization of a Base instanceArgs
         Args:
             self (object): <class '__main__.BaseMode'> type object
-		    - *args: list of arguments
-		    - **kwargs: dict of key-values arguments
-		"""
+            - *args: list of arguments
+            - **kwargs: dict of key-values arguments
+            """
 
         time_format = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs is not None and kwargs != {}:
@@ -33,10 +33,10 @@ class BaseModel:
                 self.id = kwargs["id"]
             if "created_at" in kwargs.keys():
                 self.created_at = datetime.strptime(kwargs["created_at"],
-                                        time_format)
+                                                    time_format)
             if 'updated_at' in kwargs.keys():
                 self.updated_at = datetime.strptime(kwargs['updated_at'],
-                                        time_format)
+                                                    time_format)
 
         else:
             self.id = str(uuid4())
@@ -54,11 +54,11 @@ class BaseModel:
         Return: string representation of the object that called it
         """
 
-        return "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
-
+        return "[{}] ({}) {}".format(type(self).__name__,
+                                     self.id, self.__dict__)
 
     def save(self):
-        """Updates 'updated_at' attribute with 
+        """Updates 'updated_at' attribute with
         the current time
         Args:
             self.(object): <class '__main__.BaseModel'> type object
@@ -67,7 +67,6 @@ class BaseModel:
         self.update_at = datetime.now()
         models.storage.save()
         return None
-
 
     def to_dict(self):
         """Returns a dictionary representation of an instance
