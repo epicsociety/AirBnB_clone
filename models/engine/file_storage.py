@@ -48,7 +48,6 @@ class FileStorage:
         '''
         save_dict = {}
         for k, v in FileStorage.__objects.items():
-            print(k, v)
             v_dict = v.to_dict()
             save_dict[k] = v_dict
         with open(FileStorage.__file_path, 'w') as f:

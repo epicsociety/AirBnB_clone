@@ -21,20 +21,27 @@ class BaseModel:
 		    - **kwargs: dict of key-values arguments
 		"""
 
-        time = "%Y-%m-%dT%H:%M:%S.%f"
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
         if kwargs is not None and kwargs != {}:
             for k, v in kwargs.items():
-                if k != "__class__":
-                    if k == "created_at" or k == "updated_at":
-                        setattr(self, k, datetime.strptime(v, time))
+                if k == "__class__":
+                    pass
+                else:
+                    setattr(self, k, v)
 
-                    else:
-                        setattr(self, k, v)
+            if "id" in kwargs.keys():
+                self.id = kwargs["id"]
+            if "created_at" in kwargs.keys():
+                self.created_at = datetime.strptime(kwargs["created_at"],
+                                        time_format)
+            if 'updated_at' in kwargs.keys():
+                self.updated_at = datetime.strptime(kwargs['updated_at'],
+                                        time_format)
 
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
-            self.updated_at = deepcopy(self.created_at)
+            self.updated_at = self.created_at
             models.storage.new(self)
 
     def __str__(self):
@@ -58,7 +65,6 @@ class BaseModel:
         """
 
         self.update_at = datetime.now()
-        models.storage.new(self)
         models.storage.save()
         return None
 
@@ -73,22 +79,8 @@ class BaseModel:
 
         """
 
-        my_dict = {}
-        my_dict.update(self.__dict__)
+        my_dict = self.__dict__.copy()
         my_dict["__class__"] = self.__class__.__name__
         my_dict["created_at"] = self.created_at.isoformat()
         my_dict["updated_at"] = self.updated_at.isoformat()
         return my_dict
-
-    def save(self):
-        """Updates 'updated_at' attribute with 
-        the current time 
-        Args:
-            self.(object): <class '__main__.BaseModel'> type object
-        """
-
-        self.update_at = datetime.now()
-        storage.new(self)
-        storage.save()
-        return None
-
