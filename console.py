@@ -236,17 +236,16 @@ class HBNBCommand(cmd.Cmd):
                 setattr(obj, attr, dicty[attr])
 
     def do_quit(self, arg):
-        """Quit the shell"""
-        return 1
+        """Quit command to exit the program"""
+        return True
 
     def do_EOF(self, arg):
-        """Quit the shell"""
-        print()
-        return 1
+        """Quit command to exit the program"""
+        return True
 
     def emptyline(self):
-        """Don't do anything if there's an empty line"""
-        return 0
+        """Pass if there's an empty line"""
+        pass
 
 
 if __name__ == "__main__":

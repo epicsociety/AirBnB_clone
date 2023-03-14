@@ -7,7 +7,7 @@ The base class fo the AirBnB clone console
 import models
 from copy import deepcopy
 from datetime import datetime
-from uuid import uuid4
+import uuid
 
 
 class BaseModel:
@@ -39,9 +39,9 @@ class BaseModel:
                                                     time_format)
 
         else:
-            self.id = str(uuid4())
+            self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
-            self.updated_at = self.created_at
+            self.updated_at = datetime.now()
             models.storage.new(self)
 
     def __str__(self):
@@ -58,7 +58,7 @@ class BaseModel:
                                      self.id, self.__dict__)
 
     def save(self):
-        """Updates 'updated_at' attribute with
+        """Updatesi 'updated_at' attribute with
         the current time
         Args:
             self.(object): <class '__main__.BaseModel'> type object
@@ -73,8 +73,7 @@ class BaseModel:
         Args:
             self (object): <class '__main__.BaseModel'> type object
 
-        Return:
-            Dictionary representation of all attributed of object
+        Dictionary contains all keys/values of __dict__ of a instance
 
         """
 
